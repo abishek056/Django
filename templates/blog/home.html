@@ -1,25 +1,84 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-   <h1>Welcome to my Blog</h1> 
-   <h2> Latest Posts</h2>
+{% extends 'base.html' %}
+{% block title %}Home{% endblock %}
+{% block content %}
+   <h1>Welcome to my Blog</h1>
+   <h2>Categories</h2>
+      <ul class="categories">
+         {% for category in categories %}
+            <li>{{ category.name }}</li>
+         {% endfor %}
+      </ul>
 
-{% for post in posts %}
+   <h2>Latest Posts</h2>
 
-   <div> 
-        <h3>{{post.title}}</h3>
-        <p>{{post.content}}</p>
-        <p> Category: {{post.category}}</p>
-        <p> At {{Post.created}} by {{post.author}}</p>
-   </div>
+   {% for post in posts %}
+      <div>
+         <a href="{% url 'blog:post_detail' slug=post.slug %}">
+               <h3>{{ post.title }}</h3>
+         </a>
 
+         <p>{{ post.content }}</p>
+         <p>Category: {{ post.Category.name }}</p>
+         <p>At {{ post.created_by }} by {{ post.author }}</p>
+      </div>
+   {% empty %}
+      <p>No posts available.</p>
    {% endfor %}
+{% endblock %}
 
-    
-</body>
+
+
+
+
+
+
+
+{% comment %} {% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+      <h1>Welcome to my Blog</h1>
+
+      <h2>Latest Posts</h2>
+
+      {% for post in posts %}
+               <div>
+                  <a href="{% url "blog:post_detail" slug=post.slug %}">{{ post.title }}</a>
+                  <h3>{{ post.title }}</h3>
+                  <p>{{ post.content }}</p>
+                  <p>Category: {{ post.Category.name }}</p>
+                  <p>At {{ post.created_by }} by {{ post.author }}</p>
+               </div>
+         
+      {% endfor %}
+{% endblock %}
+ {% endcomment %}
+
+
+
+
+{% comment %} <!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>Welcome to my Blog</h1>
+    <h2>Latest Posts</h2>
+
+    {% for post in posts %}
+
+    <div>
+      <h3>{{post.title}}</h3>
+      <p>{{post.content}}</p>
+      <p>Category: {{post.category}}</p>
+      <p>At {{Post.created}} by {{post.author}}</p>
+    </div>
+
+    {% endfor %}
+  </body>
 </html>
+{% endcomment %}

@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
-from .models import Post
+from .models import Post, Category
 
 # Create your views here.
 
@@ -9,9 +9,18 @@ from .models import Post
 #     return render(request, 'blog/home.html')
 
 
+
+# def index(request):
+#     posts = Post.objects.all()
+#     return render(request, 'blog/home.html', {'posts': posts})
+
 def index(request):
     posts = Post.objects.all()
-    return render(request, 'blog/home.html', {'posts': posts})
+    categories = Category.objects.all()
+    return render(request, 'blog/home.html', {
+        'posts': posts,
+        'categories': categories,
+    })
 
 def post_detail(request, slug):
     # post = Post.objects.get(slug=slug)

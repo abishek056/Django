@@ -16,8 +16,9 @@ class Post(models.Model):
 
     slug = models.CharField(max_length=200, unique=True, blank=True)
     author = models.CharField(max_length=100)
+
     # category = models.CharField(max_length=100)
-    Category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, blank=True)
+    Category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True)
     created_by = models.DateTimeField(auto_now_add=True)
 
     def save(self, *args, **kwargs):
@@ -38,4 +39,13 @@ class Post(models.Model):
     def __str__(self):
         return self.title
 
+# comment for post
 
+class Comment (models.Model):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments')
+    name = models.CharField(max_length=100)
+    content = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Comment by {self.name} on {self.post.title}"

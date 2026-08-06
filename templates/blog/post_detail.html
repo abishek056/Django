@@ -1,36 +1,60 @@
-{% extends 'base.html' %}
+{% extends 'base.html' %} 
+{% block title %} Home {% endblock %}
+{%block content %}
 
-{% block title %} {{ post.title }}{% endblock %}
+<h1>{{ post.title }}</h1>
+<p>{{ post.content }}</p>
+<p>Category: {{ post.Category.name }}</p>
+<p>Published on: {{ post.created_by }} by {{ post.author }}</p>
 
-{% block content %}
-        <h1>{{post.title}}</h1>
-        <p>{{post.content}}</p>
-        <p> Category: {{post.category}}</p>
-        <p> At {{post.created}} by {{post.author}}</p>
+<h2>Comments</h2>
+
+<form method="post">
+  {% csrf_token %} 
+  {% if errors %}
+  <ul style="color: blue">
+    {% for error in errors %}
+    <li>{{ error }}</li>
+    {% endfor %}
+  </ul>
+
+  {% endif %}
+
+  <label for="username">Your Name</label>
+  <input type="text" id="username" name="name" value="{{ name }}" />
+  <label for="comment">Comment</label>
+  <textarea id="comment" name="content"></textarea>
+  <button type="submit">Post a comment</button>
+</form>
+
+{% for comment in post.comments.all %}
+    <div class="comment">
+    <strong>{{ comment.name }}</strong>
+    <p>{{ comment.content }}</p>
+    <small> Published on: {{ comment.created_at }}</small>
+    </div>
+
+{% empty %}
+<p>No comments yet</p>
+
+{% endfor %} 
 {% endblock %}
 
 
 
 
-
-
-
-
-
-
-
-
-{% comment %} <!DOCTYPE html>
+{% comment %} <!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-</head>
-<body>
+  </head>
+  <body>
     <h1>{{post.title}}</h1>
     <p>{{post.content}}</p>
-    <p> Category: {{post.category}}</p>
-    <p> At {{post.created}} by {{post.author}}</p>
-</body>
-</html> {% endcomment %}
+    <p>Category: {{post.category}}</p>
+    <p>At {{post.created}} by {{post.author}}</p>
+  </body>
+</html>
+{% endcomment %}

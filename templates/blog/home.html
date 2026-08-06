@@ -6,6 +6,8 @@
       <ul class="categories">
          {% for category in categories %}
             <li>{{ category.name }}</li>
+            {% empty %}
+            <li>No categories available.</li>
          {% endfor %}
       </ul>
 
@@ -14,15 +16,15 @@
    {% for post in posts %}
       <div>
          <a href="{% url 'blog:post_detail' slug=post.slug %}">
+            <img src="{{post.featured_image.url}}" alt="post.title" width="400" height="200">
                <h3>{{ post.title }}</h3>
          </a>
 
          <p>{{ post.content }}</p>
          <p>Category: {{ post.Category.name }}</p>
-         <p>At {{ post.created_by }} by {{ post.author }}</p>
+         <p>Published on: {{ post.created_by }} by {{ post.author }}</p>
       </div>
-   {% empty %}
-      <p>No posts available.</p>
+   
    {% endfor %}
 {% endblock %}
 

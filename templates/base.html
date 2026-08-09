@@ -14,8 +14,9 @@
       <nav>
         <ul>
           <li><a href="{% url 'blog:home' %}">Home</a></li>
-          <li><a href="/about">About</a></li>
-          <li><a href="#">Search</a></li>
+          <li><a href="{% url 'blog:about' %}">About</a></li>
+          <li><a href="{% url 'blog:post_created' %}"> Create New Post</a></li>
+          <li><a href="{% url 'blog:post_list' %}"> Search</a></li>
         </ul>
       </nav>
     </header>
